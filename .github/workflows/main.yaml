@@ -13,19 +13,90 @@ jobs:
   # OS that this job will be running on
     runs-on: ubuntu-latest
 
+#Condition #NORUN
+    if: "!startsWith(${{ github.event.head_commit.message }}, 'NORUN')"
     # list of steps to perform task
     steps:
-    - name: echo the date
-      run: echo "The current time and date in GitHub is $(date)"
-    - name: echo information about the context
-      run: echo "head_ref - ${{github.head_ref}}, owner - ${{github.repository_owner}}"
-    - name: List runner name
-      run: echo "runner os - ${{runner.os}}"
-    - name: echo my secret
-      run: echo "MY_SECRET is ${{secrets.MY_SECRET}}"
-    - name: list my current directory
-      run: ls -la
-    - name: Checkot the current repo
+    - name: CICD checkout
       uses: actions/checkout@v3
-    - name: List my current directory after checkout
-      run: ls -la
+      with:
+        ref: ${{ github.ref_name }}
+
+    - name: Railway deployment
+      run: npm i -g @railway/cli
+           railway up
+      with:
+           railway_token: ${{ secrets.RAILWAY_TOKEN }}
+
+    - name: Release action
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "release.tar.gz,foo/*.txt"
+        bodyFile: "body.md"
+        token: ${{ secrets.YOUR_GITHUB_TOKEN }}
+        tag: ${{ github.ref_name }}
+
+    # - name: Send custom JSON data to Slack workflow
+    #   id: slack
+    #   uses: slackapi/slack-github-action@v1.23.0
+    #   with:
+    # # For posting a rich message using Block Kit
+    #     payload: |
+    #       {
+    #         "blocks": [
+    #           {
+    #                "type": "header",
+    #                "text": {
+    #                   "type": "plain_text",
+    #                   "text": "DipSA55 CI/CD Assignment Submission",
+    #                   "emoji": true
+    #              }
+    #           },
+    #           {
+    #                "type": "section",
+    #                "fields": [
+    #                  {
+    #                     "type": "mrkdwn",
+    #                     "text": "*Name:*\nWong Chee Kiat"
+    #                  },
+    #                  {
+    #                     "type": "mrkdwn",
+    #                     "text": "*Matriculation:*\nA0265064E"
+    #                  }
+    #               ]
+    #           },
+    #           {
+    #                "type": "section",
+    #                "fields": [
+    #                   {
+    #                        "type": "mrkdwn",
+    #                        "text": "*Email:*\nE1045739@u.edu.sg"
+    #                   },
+    #                   {
+    #                       "type": "mrkdwn",
+    #                       "text": "*Repository:*\n<${{github.repositoryUrl}}>"
+    #                   }
+    #               ]
+    #           },
+    #           {
+    #                 "type": "section",
+    #                 "fields": [
+    #                 {
+    #                      "type": "mrkdwn",
+    #                      "text": "*Deployment:*\n<${{secrets.DEPLOYMENT_LINK}}>"
+    #                 }
+    #               ]
+    #           },
+    #           {
+    #                 "type": "section",
+    #                 "text": {
+    #                   "type": "mrkdwn",
+    #                   "text": "<${{secrets.DEPLOYMENT_LINK}}|Open Application>"
+    #                 }
+    #           }
+    #         ]
+    #       }
+        
+    #   env:
+    #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    #     SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
