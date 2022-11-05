@@ -83,7 +83,7 @@ jobs:
                     "fields": [
                     {
                          "type": "mrkdwn",
-                         "text": "*Deployment:*\n<${{secrets.DEPLOYMENT_LINK}}>"
+                         "text": "*Deployment:*\n<https://${{secrets.DEPLOYMENT_LINK}}>"
                     }
                   ]
               },
@@ -91,7 +91,7 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": "<${{secrets.DEPLOYMENT_LINK}}|Open Application>"
+                      "text": "<https://${{secrets.DEPLOYMENT_LINK}}|Open Application>"
                     }
               }
             ]
