@@ -10,7 +10,7 @@ on:
 jobs:
   # job name
   my-first-workflow:
-  # OS that this job will be running on---
+  # OS that this job will be running on----
     runs-on: ubuntu-latest
 
 #Condition #NORUN
@@ -36,67 +36,67 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ github.ref_name }}
 
-    # - name: Send custom JSON data to Slack workflow
-    #   id: slack
-    #   uses: slackapi/slack-github-action@v1.23.0
-    #   with:
-    # # For posting a rich message using Block Kit
-    #     payload: |
-    #       {
-    #         "blocks": [
-    #           {
-    #                "type": "header",
-    #                "text": {
-    #                   "type": "plain_text",
-    #                   "text": "DipSA55 CI/CD Assignment Submission",
-    #                   "emoji": true
-    #              }
-    #           },
-    #           {
-    #                "type": "section",
-    #                "fields": [
-    #                  {
-    #                     "type": "mrkdwn",
-    #                     "text": "*Name:*\nWong Chee Kiat"
-    #                  },
-    #                  {
-    #                     "type": "mrkdwn",
-    #                     "text": "*Matriculation:*\nA0265064E"
-    #                  }
-    #               ]
-    #           },
-    #           {
-    #                "type": "section",
-    #                "fields": [
-    #                   {
-    #                        "type": "mrkdwn",
-    #                        "text": "*Email:*\nE1045739@u.edu.sg"
-    #                   },
-    #                   {
-    #                       "type": "mrkdwn",
-    #                       "text": "*Repository:*\n<${{github.repositoryUrl}}>"
-    #                   }
-    #               ]
-    #           },
-    #           {
-    #                 "type": "section",
-    #                 "fields": [
-    #                 {
-    #                      "type": "mrkdwn",
-    #                      "text": "*Deployment:*\n<${{secrets.DEPLOYMENT_LINK}}>"
-    #                 }
-    #               ]
-    #           },
-    #           {
-    #                 "type": "section",
-    #                 "text": {
-    #                   "type": "mrkdwn",
-    #                   "text": "<${{secrets.DEPLOYMENT_LINK}}|Open Application>"
-    #                 }
-    #           }
-    #         ]
-    #       }
+    - name: Send custom JSON data to Slack workflow
+      id: slack
+      uses: slackapi/slack-github-action@v1.23.0
+      with:
+    # For posting a rich message using Block Kit
+        payload: |
+          {
+            "blocks": [
+              {
+                   "type": "header",
+                   "text": {
+                      "type": "plain_text",
+                      "text": "DipSA55 CI/CD Assignment Submission",
+                      "emoji": true
+                 }
+              },
+              {
+                   "type": "section",
+                   "fields": [
+                     {
+                        "type": "mrkdwn",
+                        "text": "*Name:*\nWong Chee Kiat"
+                     },
+                     {
+                        "type": "mrkdwn",
+                        "text": "*Matriculation:*\nA0265064E"
+                     }
+                  ]
+              },
+              {
+                   "type": "section",
+                   "fields": [
+                      {
+                           "type": "mrkdwn",
+                           "text": "*Email:*\nE1045739@u.edu.sg"
+                      },
+                      {
+                          "type": "mrkdwn",
+                          "text": "*Repository:*\n<${{github.repositoryUrl}}>"
+                      }
+                  ]
+              },
+              {
+                    "type": "section",
+                    "fields": [
+                    {
+                         "type": "mrkdwn",
+                         "text": "*Deployment:*\n<${{secrets.DEPLOYMENT_LINK}}>"
+                    }
+                  ]
+              },
+              {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "<${{secrets.DEPLOYMENT_LINK}}|Open Application>"
+                    }
+              }
+            ]
+          }
         
-    #   env:
-    #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-    #     SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
