@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
 #Condition #NORUN
-    if: "!startsWith(${{ github.event.head_commit.message }}, '#NORUN')"
+    if: "!startsWith( github.event.head_commit.message, '#NORUN')"
     # list of steps to perform task
     steps:
     - name: CICD checkout
